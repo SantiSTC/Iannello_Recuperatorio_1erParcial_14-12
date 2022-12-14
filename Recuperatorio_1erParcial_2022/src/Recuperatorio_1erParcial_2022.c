@@ -12,18 +12,18 @@
 #include <stdlib.h>
 #include "nexo.h"
 
-#define T_C 3
+#define T_C 100
 #define T_A 100
 
 int main(void) {
 	setbuf(stdout, NULL);
 
-	eCliente listaClientes[T_C] = {{1, 44444444, "Jorge", "Peña", OCUPADO}, {2, 11111111, "Manu", "Paoss", OCUPADO},{3, 88888888, "Juan", "Soles", OCUPADO}};
+	eCliente listaClientes[T_C];
 	eAlquiler listaAlquileres[T_A];
 
 	int opcion;
 	int retorno;
-	int flagCarga = 1;
+	int flagCarga = 0;
 	int opcionInformes;
 
 	InicializarAlquileres(listaAlquileres, T_A);
@@ -120,24 +120,32 @@ int main(void) {
 				}
 			break;
 			case 6:
-				MostrarListaAlquileres(listaAlquileres, T_A, listaClientes, T_C);
-				opcionInformes = MenuInformes();
-
-				switch(opcionInformes)
+				if(flagCarga == 1)
 				{
-					case 1:
-						InformarElClienteConMasAlquileres(listaAlquileres, T_A, listaClientes, T_C);
-					break;
-					case 2:
-						InformarEquipoMasAlquilado(listaAlquileres, T_A);
-					break;
-					case 3:
-						InformarTiempoPromedioRealDeAlquileres(listaAlquileres, T_A);
-					break;
-					case 4:
-						InformarClientesConSusAlquileres(listaAlquileres, T_A, listaClientes, T_C);
-					break;
+					MostrarListaAlquileres(listaAlquileres, T_A, listaClientes, T_C);
+					opcionInformes = MenuInformes();
+
+					switch(opcionInformes)
+					{
+						case 1:
+							InformarElClienteConMasAlquileres(listaAlquileres, T_A, listaClientes, T_C);
+						break;
+						case 2:
+							InformarEquipoMasAlquilado(listaAlquileres, T_A);
+						break;
+						case 3:
+							InformarTiempoPromedioRealDeAlquileres(listaAlquileres, T_A);
+						break;
+						case 4:
+							InformarClientesConSusAlquileres(listaAlquileres, T_A, listaClientes, T_C);
+						break;
+					}
 				}
+				else
+				{
+					printf("Se debera cargar al menos un cliente antes de ingresar a esta opcion...\n");
+				}
+
 			break;
 		}
 
